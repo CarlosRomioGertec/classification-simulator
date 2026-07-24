@@ -1,3 +1,3 @@
-[submodule "include/decision-engine"]
-	path = include/decision-engine
+[submodule "decision-engine"]
+	path = decision-engine
 	url = https://github.com/CarlosRomioGertec/decision-engine
