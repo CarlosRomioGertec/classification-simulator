@@ -1,0 +1,43 @@
+﻿{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "linux-debug",
+      "displayName": "Linux Debug",
+      "description": "Target Linux with GCC (Debug)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "installDir": "${sourceDir}/install/${presetName}",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "gcc",
+        "CMAKE_CXX_COMPILER": "g++",
+        "CMAKE_BUILD_TYPE": "Debug"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
+          "sourceDir": "/weimach/project/classification_simulator",
+          "buildRoot": "/weimach/project/classification_simulator/build/${presetName}",
+          "installRoot": "/weimach/project/classification_simulator/install/${presetName}",
+          "copySources": true,
+          "copySourcesOptions": {
+            "exclusionList": [
+              "**/build/**",
+              "**/.vs/**",
+              "**/.git/**",
+              "**/bin/**",
+              "**/obj/**",
+              "**/tmp/**",
+              "**/docs/**",
+              "**/test_data/**",
+              "**/*.user",
+              "**/*.sln",
+              "**/*.vcxproj"
+            ],
+            "concurrentCopies": 8,
+            "verbosity": "normal"
+          }
+        }
+      }
+    }
+  ]
+}
