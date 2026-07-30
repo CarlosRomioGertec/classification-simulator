@@ -1,5 +1,6 @@
 ﻿#include "services/simulator/simulator.h"
 #include "reporting/metrics_reporter.h"
+#include "decision_engine/decision_engine.h"
 
 #include <fstream>
 #include <string>
