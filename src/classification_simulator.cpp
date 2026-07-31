@@ -35,6 +35,7 @@ static std::vector<double> loadWeightsFromCSV(const std::string& path) {
 
 int main()
 {
+	decision_engine::DecisionEngine engine(decision_engine::Program);
 
     //teste
 	// ==========================
