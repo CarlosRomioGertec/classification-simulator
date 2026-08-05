@@ -1,13 +1,67 @@
-﻿#include "services/simulator/simulator.h"
-#include "reporting/metrics_reporter.h"
-#include "decision_engine/decision_engine.h"
+﻿#include <decision_engine/decision_engine.h>
 
 #include <fstream>
 #include <string>
 #include <vector>
 #include <iostream>
 
-using namespace std;
+static decision_engine::Program createTestProgram() {
+
+    decision_engine::Program program;
+
+    program.name = "Teste";
+    program.program_id = 1;
+
+    decision_engine::OperationProfile profile;
+
+    profile.name = "Perfil A";
+    profile.operation_profile_id = 1;
+
+    profile.target_weight = 1000.0;
+
+    profile.base_margin = 10.0;
+    profile.max_margin = 30.0;
+
+    profile.timeout_seconds = 10.0;
+
+    profile.weight_range.minimum_weight = 100.0;
+    profile.weight_range.maximum_weight = 500.0;
+
+    profile.outputs_id = { 1, 2, 3 };
+
+    profile.decision_strategy =
+        decision_engine::DecisionStrategy::FirstCandidate;
+
+    program.operation_profiles.push_back(profile);
+
+    return program;
+}
+
+void testPiece(
+    decision_engine::DecisionEngine& engine,
+    double weight)
+{
+    decision_engine::Piece piece;
+
+    piece.weight = weight;
+
+    auto output = engine.process(piece);
+
+    if (output)
+    {
+        std::cout
+            << weight
+            << " g -> Output "
+            << *output
+            << '\n';
+    }
+    else
+    {
+        std::cout
+            << weight
+            << " g -> Rejeitada\n";
+    }
+}
 
 static std::vector<double> loadWeightsFromCSV(const std::string& path) {
     std::vector<double> weights;
@@ -35,34 +89,20 @@ static std::vector<double> loadWeightsFromCSV(const std::string& path) {
 
 int main()
 {
-	decision_engine::DecisionEngine engine(decision_engine::Program);
 
-    //teste
-	// ==========================
-    //ClassificationConfig config;
+    //auto weights = loadWeightsFromCSV("weights.csv");
 
-    //config.small_max = 199;
+    auto program = createTestProgram();
 
-    //config.closed_ranges = {
-    //    {200, 220},
-    //    {221, 240},
-    //    {241, 260},
-    //    {261, 280},
-    //    {281, 300}
-    //};
+    decision_engine::DecisionEngine engine(program);
 
-    //config.large_min = 301;
-
-    auto weights = loadWeightsFromCSV("weights.csv");
-
-    int small = 0;
-    int closed = 0;
-    int open = 0;
-
-    std::cout << "\n--- Distribuição ---\n";
-    std::cout << "Small: " << small << "\n";
-    std::cout << "Closed: " << closed << "\n";
-    std::cout << "Open: " << open << "\n";
+    testPiece(engine, 250);
+    testPiece(engine, 300);
+    testPiece(engine, 700);
+    testPiece(engine, 250);
+    testPiece(engine, 250);
+    testPiece(engine, 250);
+    testPiece(engine, 250);
 
     return 0;
 }
