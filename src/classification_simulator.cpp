@@ -29,34 +29,28 @@ static decision_engine::Program createTestProgram() {
 
     profile.outputs_id = { 1, 2, 3 };
 
-    profile.decision_strategy =
-        decision_engine::DecisionStrategy::FirstCandidate;
+    profile.decision_strategy = decision_engine::DecisionStrategy::Greedy;
 
     program.operation_profiles.push_back(profile);
 
     return program;
 }
 
-void testPiece(
-    decision_engine::DecisionEngine& engine,
-    double weight)
-{
+static void testPiece(decision_engine::DecisionEngine& engine, double weight) {
+
     decision_engine::Piece piece;
 
     piece.weight = weight;
 
     auto output = engine.process(piece);
 
-    if (output)
-    {
+    if (output) {
         std::cout
             << weight
             << " g -> Output "
             << *output
             << '\n';
-    }
-    else
-    {
+    } else {
         std::cout
             << weight
             << " g -> Rejeitada\n";
